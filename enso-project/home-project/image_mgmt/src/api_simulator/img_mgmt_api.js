@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 
 //const mongoUrl = process.env.MONGO_URI;
 const mongoUrl = 'mongodb://mongodb:27017/docker-mongo';
-
+process.env.SECRET = "JWT_TOKEN"
 
 // Setup JWT authentication
 app.use((req, res, next) => {
@@ -48,13 +48,13 @@ const ImageSchema = new mongoose.Schema({
   name: { type: String, required: true },
   repository: { type: String, required: true },
   version: { type: String, required: true },
-  metadata: { type: Object, required: true }
+  metadata: { type: Object, required: false }
 }, { timestamps: true });
 
 // Define image deployment schema
 const DeploymentSchema = new mongoose.Schema({
   id: { type: String, required: true },
-  imageId: { type: String, required: true }
+  imageId: { type: String, required: false }
 }, { timestamps: true });
 
 // Create image and deployment models
