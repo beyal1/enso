@@ -1,0 +1,34 @@
+version: '3.9'
+services:
+  nginx:
+    container_name: 'nginx'
+    build:
+      context: ./src/nginx
+      dockerfile: ./Dockerfile
+    networks:
+      - net-app
+    ports:
+      - '80:80'
+      - '443:443'
+  api_simulator:
+    container_name: 'api_simulator'
+    build:
+      context: ./src/api_simulator
+      dockerfile: ./Dockerfile
+    networks:
+      - net-app
+    ports:
+      - '4000:4000'
+  db:
+    container_name: 'mongodb'
+    build:
+      context: ./src/db
+      dockerfile: ./Dockerfile
+    networks:
+      - net-app
+    ports:
+      - '27017:27017'
+networks:
+  net-app:
+    driver: bridge
+    name: nns

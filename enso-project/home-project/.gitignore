@@ -1,0 +1,5 @@
+*.json
+.terraform*
+*tfstate*
+**.DS_Store**
+node_modules

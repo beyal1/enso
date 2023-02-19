@@ -1,0 +1,34 @@
+access_log on;
+client_max_body_size 50M;
+client_body_buffer_size 1m;
+keepalive_timeout 75s;
+
+
+upstream api_simulator {
+    server api_simulator:4000;
+    keepalive 75;
+}
+
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    root /usr/share/nginx/html;
+    index index.html index.htm;
+
+    server_name _;
+    proxy_read_timeout 3600;
+    proxy_http_version 1.1;
+    proxy_set_header Connection "";
+    client_max_body_size 50M;
+    client_body_buffer_size 1m;
+
+    #For SSL configurations
+    #listen 2000 ssl;
+    #listen [::]:2000 ssl;
+    #include snippets/self-signed.conf;
+
+    location /api/ {
+        proxy_pass http://api_simulator/;
+    }
+
+}
